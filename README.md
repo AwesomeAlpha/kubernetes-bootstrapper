@@ -33,7 +33,7 @@ Commmands for Grafana(Visualization Tool) using Helm
 
     # kubectl apply -f monitoring/grafana/config.yml
     
-    # helm install grafana stable/grafana     -f monitoring/grafana/values.yml   --namespace monitoring
+    # helm install grafana stable/grafana -f monitoring/grafana/values.yml --namespace monitoring
     
 Password would be revealed by using the following command 
  
