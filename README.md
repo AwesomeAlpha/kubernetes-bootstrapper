@@ -44,7 +44,7 @@ Locate the pod name of grafana
  
     # kubectl get pods -n monitoring
     
-Copy the grafana pod as follow to port forward to 3000 
+Copy the grafana pod in the following command to port forward to 3000 
  
     #  kubectl --namespace monitoring port-forward {GRAFANA POD NAME} 3000
  
