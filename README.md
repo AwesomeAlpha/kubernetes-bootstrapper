@@ -1,15 +1,15 @@
 # kubernetes-bootstrapper
 Bootstrap kubernetes with a few resources for monitoring and meshing
 
-This repo serves as the source for https://medium.com/@chris_linguine/how-to-monitor-your-kubernetes-cluster-with-prometheus-and-grafana-2d5704187fc8
+This repo serves as the source for https://medium.com/@chris_linguine/how-to-monitor-your-kubernetes-cluster-with-prometheus-and-grafana-2d5704187fc8  
 
-Follow that arrticle to get everything up and running. 
+Follow the link to get everything up and running if you have helm version less 3.
 
-If you have any issues, don't hesitate commenting or opening an issue.
 
-USING HELM 3 or ABOVE. 
+* 		An existing Kubernetes Cluster.
+* 		kubectl & helm binaries locally installed ( For Helm version 3 or above)
 
-Commands are as follows for Prometheus(Monitoring Tool) and Grafana(Visualization Tool) 
+1. Commands for Prometheus(Monitoring Tool) using Helm 
 
     # helm repo update 
 
@@ -17,17 +17,50 @@ Commands are as follows for Prometheus(Monitoring Tool) and Grafana(Visualizatio
 
     # helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com
 
- Create namespace namely: monitoring
+ 2. Create namespace namely: monitoring
  
     # kubectl create namespace monitoring
     
-Install Prometheus     
+3. Install Prometheus     
 
     # helm install prometheus stable/prometheus --namespace monitoring
     
- Port Forwarding to Port 8000 
+ 4. Port Forwarding to Port 8000 (Use --> 127.0.0.1:8000 or localhost:8000 to access Prometheus Server) 
  
     # kubectl port-forward svc/prometheus-server -n monitoring 8000:80
+    
+5. Commmands for Grafana(Visualization Tool) using Helm
+
+    # kubectl apply -f monitoring/grafana/config.yml
+    
+    # helm install grafana stable/grafana     -f monitoring/grafana/values.yml   --namespace monitoring
+    
+ 6. Password would be revealed by using the following command 
+ 
+    # kubectl get secret --namespace monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+ 
+ 7. Locate the pod name of grafana
+ 
+    # kubectl get pods -n monitoring
+    
+ 8. Copy the grafana pod as follow to port forward to 3000 
+ 
+    #  kubectl --namespace monitoring port-forward {GRAFANA POD NAME} 3000
+ 
+9. Alternatively, you may use instead of command encouraged at bullet 8. 
+
+    # export POD_NAME=$(kubectl get pods --namespace monitoring -l "app=grafana,release=grafana" -o jsonpath="        {.items[0].metadata.name}")
+    
+Voila, you will be able to use Prometheus and Grafana using 127.0.0.1:8000 and 127.0.0.1:3000, respectively. 
+
+
+
+
+    
+    
+
+ 
+   
     
     
     
