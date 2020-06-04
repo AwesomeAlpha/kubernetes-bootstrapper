@@ -17,7 +17,7 @@ Commands for Prometheus(Monitoring Tool) using Helm
 
     # helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com
 
-Create namespace namely: monitoring
+Check if namespace "monitoring" available otherwise create it as follows 
  
     # kubectl create namespace monitoring
 
